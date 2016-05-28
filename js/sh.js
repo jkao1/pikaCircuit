@@ -14,24 +14,28 @@ in progress:
 var names:
 ob = wires
 retr = transistor
-led = lightblub
+lemd06 = lightblub
 batt = battery
 
 */
 
-var ob, retr, led, char;
-var img;
-
 function start() { // initiates game
-    wire01 = new component(150, 20, "#D7912F", 150, 400); 
-    wire02 = new component(20, 180, "#D7912F", 240, 465); 
-    wire03 = new component(20, 480, "#D7912F", 600, 455); 
-    wire04 = new component(150, 20, "#D7912F", 800, 382); 
-    retr = new component(40, 80, "#B7641F", 350, 465);
-    led = new component(60, 80, "#DE401E", 800, 280);
-    batt = new component(90, 100, "#006C4C", 150, 280);
+    pl_wire01 = new component(150, 20, "#BEC991", 150, 400);
+    pl_wire02 = new component(20, 180, "#BEC991", 240, 465); 
+    pl_wire03 = new component(20, 480, "#BEC991", 600, 455); 
+    pl_wire04 = new component(150, 20, "#BEC991", 800, 382); 
+    
+    wire01 = new component(150, 20, "#D7912F", 220, 300); 
+    wire02 = new component(20, 180, "#D7912F", 240, 565); 
+    wire03 = new component(20, 480, "#D7912F", 600, 555); 
+    wire04 = new component(150, 20, "#D7912F", 800, 582); 
+    
+    retr05 = new component(40, 80, "#B7641F", 350, 465);
+    lemd06 = new component(60, 80, "#DE401E", 800, 280);
+    batt07 = new component(90, 100, "#006C4C", 150, 280);
+    
     char = new component(15, 15, "#fa8940", 250, 265);
-    // img = new component(30, 30, "../img/resistor.png",100, 100, 'img');
+
     area.start();
 }
 
@@ -145,6 +149,13 @@ function component(width, height, color, x, y, type) {
         // this.angleInc = obj.angleInc;
         this.speed = obj.speed;
     }
+    this.snap = function(obj) {
+        this.x = obj.x;
+        this.y = obj.y;
+        // this.angle = obj.angle;
+        // this.angleInc = obj.angleInc;
+        this.speed = obj.speed;
+    }
     this.distance = function(obj) {
         var diffX = this.x - obj.x;
         var diffY = this.y - obj.y
@@ -155,15 +166,36 @@ function component(width, height, color, x, y, type) {
 var inc = 0; // angleInc's increment
 var angleSpeed = 0;
 
-var elements = ['wire01','wire02','wire03','retr']
-
-var wire01ATT = true;
-var wire02ATT = true;
-var wire03ATT = true;
-var wire04ATT = true;
-var retrATT = true;
-var ledATT = true;
-var battATT = true;
+var Main = {
+    wire01: {
+        att: true,
+        snap: false,
+    },
+    wire02: {
+        att: true,
+        snap: false,
+    },
+    wire03: {
+        att: true,
+        snap: false,
+    },
+    wire04: {
+        att: true,
+        snap: false,
+    },
+    retr05: {
+        att: true,
+        snap: false,
+    },
+    lemd06: {
+        att: true,
+        snap: false,
+    },
+    batt07: {
+        att: true,
+        snap: false,
+    }
+}
 
 function turn() {
     char.angleInc = 0;
@@ -177,14 +209,15 @@ function turn() {
 function elem_crash(objA,ornt) {
     // all replaced is marked with 'mark'
     var template = 'if (char.crash_' + ornt + `(mark)) { 
-        if (markATT) {mark.follow(char)} 
-        if (area.keys && area.keys[83]) {markATT = false; mark.angleInc = 0;mark.speed = 0;} 
-        else if (area.keys && area.keys[68]) {markATT = true} 
+        if (Main.mark.att && !Main.mark.snap) {mark.follow(char)} 
+        if (area.keys && area.keys[83]) {Main.mark.att = false; mark.angleInc = 0;mark.speed = 0;} 
+        else if (area.keys && area.keys[68]) {Main.mark.att = true} 
     }
     `
-    var result = "";
+    var result = '';
     for (var x = 0; x < objA.length; x++) {
-        result += template.replace(/mark/g, objA[x])
+        elem = objA[x]
+        add = template.replace(/mark/g, elem)
     }
     return result
 }
@@ -201,22 +234,43 @@ function updateArea() {
     area.clear();
     
     eval(elem_crash(['wire01','wire02','wire03','retr','wire04'],'horz'));    
-    eval(elem_update(['wire01','wire02','wire03','wire04','retr','led','batt']));
+    eval(elem_update(
+        ['pl_wire01','pl_wire02','pl_wire03','pl_wire04',
+         'wire01','wire02','wire03','wire04',
+         'retr05','lemd06','batt07']
+         )
+      );
     
-    a = batt.crash_horz(wire01);
+    a = batt07.crash_horz(wire01);
     b = wire01.crash_horz(wire02);
-    c = wire02.crash_horz(retr); //;gug888g8
-    d = retr.crash_horz(wire03);
+    c = wire02.crash_horz(retr05); 
+    d = retr05.crash_horz(wire03);
     e = wire03.crash_horz(wire04);
-    f = wire04.crash_horz(led);
+    f = wire04.crash_horz(lemd06);
     
-    document.getElementById('track').innerHTML = a+','+b+','+c+','+d+','+e+','+f;
     if ( a&&b&&c&&d&&e&&f ) {
         success();
     }
     
     turn();
     char.update();
+    
+    if (wire01.crash_horz(pl_wire01)) {
+        wire01.snap(pl_wire01);
+        Main.wire01.snap = true;
+    }
+    if (wire02.crash_horz(pl_wire02)) {
+        wire02.snap(pl_wire02);
+        Main.wire02.snap = true;
+    }
+    if (wire03.crash_horz(pl_wire03)) {
+        wire03.snap(pl_wire03);
+        Main.wire03.snap = true;
+    }
+    if (wire04.crash_horz(pl_wire04)) {
+        wire04.snap(pl_wire04);
+        Main.wire04.snap = true;
+    }
 }
 
 // so space doesn't scroll the page
