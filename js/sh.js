@@ -24,13 +24,14 @@ function start() { // initiates game
     pl_wire02 = new component(20, 180, "#BEC991", 240, 465); 
     pl_wire03 = new component(20, 480, "#BEC991", 600, 455); 
     pl_wire04 = new component(150, 20, "#BEC991", 800, 382); 
+    pl_retr05 = new component(40, 80, "#BEC991", 350, 465);
     
     wire01 = new component(150, 20, "#D7912F", 220, 300); 
     wire02 = new component(20, 180, "#D7912F", 240, 565); 
     wire03 = new component(20, 480, "#D7912F", 600, 555); 
     wire04 = new component(150, 20, "#D7912F", 800, 582); 
+    retr05 = new component(40, 80, "#B7641F", 450, 465);
     
-    retr05 = new component(40, 80, "#B7641F", 350, 465);
     lemd06 = new component(60, 80, "#DE401E", 800, 280);
     batt07 = new component(90, 100, "#006C4C", 150, 280);
     
@@ -186,14 +187,6 @@ var Main = {
     retr05: {
         att: true,
         snap: false,
-    },
-    lemd06: {
-        att: true,
-        snap: false,
-    },
-    batt07: {
-        att: true,
-        snap: false,
     }
 }
 
@@ -209,15 +202,15 @@ function turn() {
 function elem_crash(objA,ornt) {
     // all replaced is marked with 'mark'
     var template = 'if (char.crash_' + ornt + `(mark)) { 
-        if (Main.mark.att && !Main.mark.snap) {mark.follow(char)} 
+        if (Main.mark.att && !(Main.mark.snap)) {mark.follow(char)} 
         if (area.keys && area.keys[83]) {Main.mark.att = false; mark.angleInc = 0;mark.speed = 0;} 
         else if (area.keys && area.keys[68]) {Main.mark.att = true} 
     }
     `
     var result = '';
     for (var x = 0; x < objA.length; x++) {
-        elem = objA[x]
-        add = template.replace(/mark/g, elem)
+        elem = objA[x];
+        result += template.replace(/mark/g, elem);
     }
     return result
 }
@@ -233,7 +226,7 @@ function elem_update(objA) {
 function updateArea() {
     area.clear();
     
-    eval(elem_crash(['wire01','wire02','wire03','retr','wire04'],'horz'));    
+    eval(elem_crash(['wire01','wire02','wire03','retr05','wire04'],'horz'));    
     eval(elem_update(
         ['pl_wire01','pl_wire02','pl_wire03','pl_wire04',
          'wire01','wire02','wire03','wire04',
@@ -270,6 +263,10 @@ function updateArea() {
     if (wire04.crash_horz(pl_wire04)) {
         wire04.snap(pl_wire04);
         Main.wire04.snap = true;
+    }
+    if (retr05.crash_horz(pl_retr05)) {
+        retr05.snap(pl_retr05);
+        Main.retr05.snap = true;
     }
 }
 
