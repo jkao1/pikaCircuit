@@ -13,20 +13,23 @@ in progress:
 
 var names:
 ob = wires
-ob2 = transistor
-ob3 = lightblub
-ob4 = battery
+retr = transistor
+led = lightblub
+batt = battery
 
 */
 
-var ob, ob2, ob3, char;
+var ob, retr, led, char;
 var img;
 
 function start() { // initiates game
-    ob = new component(10, 180, "#D7912F", 400, 405); 
-    ob2 = new component(40, 80, "#B7641F", 300, 400);
-    ob3 = new component(60, 80, "#DE401E", 220, 400);
-    ob4 = new component(10, 100, "#006C4C", 434, 234);
+    wire01 = new component(150, 20, "#D7912F", 150, 400); 
+    wire02 = new component(20, 180, "#D7912F", 240, 465); 
+    wire03 = new component(20, 480, "#D7912F", 600, 455); 
+    wire04 = new component(150, 20, "#D7912F", 800, 382); 
+    retr = new component(40, 80, "#B7641F", 350, 465);
+    led = new component(60, 80, "#DE401E", 800, 280);
+    batt = new component(90, 100, "#006C4C", 150, 280);
     char = new component(15, 15, "#fa8940", 250, 265);
     // img = new component(30, 30, "../img/resistor.png",100, 100, 'img');
     area.start();
@@ -91,7 +94,29 @@ function component(width, height, color, x, y, type) {
             this.y -= this.speed * Math.cos(this.angle);   
         }
     }  
-    this.crash = function(otherobj) {
+    this.crash_vert = function(otherobj) {
+        var myleft = this.x - (this.height / 2);
+        var myright = this.x + (this.height / 2);
+        var mytop = this.y - (this.width / 2);
+        var mybottom = this.y + (this.width / 2);
+        
+        var otherleft = otherobj.x - (otherobj.width / 2);
+        var otherright = otherobj.x + (otherobj.width / 2);
+        var othertop = otherobj.y - (otherobj.height / 2);
+        var otherbottom = otherobj.y + (otherobj.height / 2);
+        
+        var a,b,c,d;
+        a = mytop > otherbottom;
+        b = myleft > otherright;
+        c = myright < otherleft;
+        d = mybottom < othertop;
+        var crash = true;
+        if (a||b||c||d) {
+            crash = false;
+        } 
+        return crash;
+    }
+    this.crash_horz = function(otherobj) {
         var myleft = this.x - (this.height / 2);
         var myright = this.x + (this.height / 2);
         var mytop = this.y - (this.width / 2);
@@ -107,10 +132,6 @@ function component(width, height, color, x, y, type) {
         b = myleft > otherright;
         c = myright < otherleft;
         d = mybottom < othertop;
-       // document .getElementById("track").innerHTML = Math.floor(myleft) + "," + Math.floor(myright) + "," + Math.floor(mybottom) + "," + Math.floor(myright);
-        if (otherobj == ob4) {
-            document.getElementById('track1').innerHTML = mytop+','+otherbottom;
-        }
         var crash = true;
         if (a||b||c||d) {
             crash = false;
@@ -120,8 +141,8 @@ function component(width, height, color, x, y, type) {
     this.follow = function(obj) {
         this.x = obj.x + 7;
         this.y = obj.y + 7;
-        this.angle = obj.angle;
-        this.angleInc = obj.angleInc;
+        // this.angle = obj.angle;
+        // this.angleInc = obj.angleInc;
         this.speed = obj.speed;
     }
     this.distance = function(obj) {
@@ -133,10 +154,16 @@ function component(width, height, color, x, y, type) {
 
 var inc = 0; // angleInc's increment
 var angleSpeed = 0;
-var obHandle = true;
-var ob2Handle = true;
-var ob3Handle = true;
-var ob4Handle = true;
+
+var elements = ['wire01','wire02','wire03','retr']
+
+var wire01ATT = true;
+var wire02ATT = true;
+var wire03ATT = true;
+var wire04ATT = true;
+var retrATT = true;
+var ledATT = true;
+var battATT = true;
 
 function turn() {
     char.angleInc = 0;
@@ -147,13 +174,12 @@ function turn() {
     if (area.keys && area.keys[40]) {char.speed= -4; }
 }
 
-function obAll(objA) {
+function elem_crash(objA,ornt) {
     // all replaced is marked with 'mark'
-    var template = `
-    if (char.crash(mark)) { 
-        if (markHandle) {mark.follow(char)} 
-        if (area.keys && area.keys[83]) {markHandle = false; mark.angleInc = 0;mark.speed = 0;} 
-        else if (area.keys && area.keys[68]) {markHandle = true} 
+    var template = 'if (char.crash_' + ornt + `(mark)) { 
+        if (markATT) {mark.follow(char)} 
+        if (area.keys && area.keys[83]) {markATT = false; mark.angleInc = 0;mark.speed = 0;} 
+        else if (area.keys && area.keys[68]) {markATT = true} 
     }
     `
     var result = "";
@@ -162,29 +188,35 @@ function obAll(objA) {
     }
     return result
 }
+
+function elem_update(objA) {
+    var result = "";
+    for (var x = 0; x < objA.length; x++) {
+        result += objA[x] + '.update();';
+    }
+    return result
+}
+
 function updateArea() {
     area.clear();
-    turn();
-    char.update();
-    eval(obAll(['ob','ob2','ob3','ob4']));
     
-    a = ob.crash(ob2);
-    b = ob2.crash(ob3);
-    c = ob3.crash(ob4);
+    eval(elem_crash(['wire01','wire02','wire03','retr','wire04'],'horz'));    
+    eval(elem_update(['wire01','wire02','wire03','wire04','retr','led','batt']));
     
-    var tracker = document.getElementById('track');
+    a = batt.crash_horz(wire01);
+    b = wire01.crash_horz(wire02);
+    c = wire02.crash_horz(retr); //;gug888g8
+    d = retr.crash_horz(wire03);
+    e = wire03.crash_horz(wire04);
+    f = wire04.crash_horz(led);
     
-    tracker.innerHTML = a+','+b+','+c;
-    
-    if (a && b && c) {
+    document.getElementById('track').innerHTML = a+','+b+','+c+','+d+','+e+','+f;
+    if ( a&&b&&c&&d&&e&&f ) {
         success();
     }
     
-    ob.update();
-    ob2.update();
-    ob3.update();
-    ob4.update();
-    img.update();
+    turn();
+    char.update();
 }
 
 // so space doesn't scroll the page
@@ -198,7 +230,6 @@ window.onkeydown = function(e) {
 function success() {
     document.getElementById('canvas').style.backgroundColor = '#28920F';
 }
-
 function reset() {
     document.getElementById('canvas').style.backgroundColor = '#4da086';
 }
