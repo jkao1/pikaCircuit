@@ -11,17 +11,23 @@ in progress:
     - issue: square root
     - (working) slash rotation
 
+var names:
+ob = wires
+ob2 = transistor
+ob3 = lightblub
+ob4 = battery
 */
 
 var ob, ob2, ob3, char;
 var img;
 
 function start() { // initiates game
-    ob = new component(15, 200, "red", 400, 400); 
-    ob2 = new component(20, 20, "blue", 300, 400);
-    ob3 = new component(20, 20, "yellow", 200, 400);
+    ob = new component(10, 180, "#D7912F", 400, 400); 
+    ob2 = new component(40, 80, "#B7641F", 300, 400);
+    ob3 = new component(60, 60, "#DE401E", 200, 400);
+    ob4 = new component(80, 100, "#006C4C", 434, 234);
     char = new component(15, 15, "#fa8940", 250, 265);
-    img = new component(30, 30, "../img/resistor.png",100, 100, 'img');
+    // img = new component(30, 30, "../img/resistor.png",100, 100, 'img');
     area.start();
 }
 
@@ -118,36 +124,46 @@ var angleSpeed = 0;
 var obHandle = true;
 var ob2Handle = true;
 var ob3Handle = true;
+var ob4Handle = true;
 
 function turn() {
     char.angleInc = 0;
     char.speed = 0;
-    if (area.keys && area.keys[37]) {char.angleInc = -2.5; }
-    if (area.keys && area.keys[39]) {char.angleInc = 2.5; }
-    if (area.keys && area.keys[38]) {char.speed= 2; }
-    if (area.keys && area.keys[40]) {char.speed= -2; }
+    if (area.keys && area.keys[37]) {char.angleInc = -5; }
+    if (area.keys && area.keys[39]) {char.angleInc = 5; }
+    if (area.keys && area.keys[38]) {char.speed= 4; }
+    if (area.keys && area.keys[40]) {char.speed= -4; }
 }
 
+function obAll(objA) {
+    // all replaced is marked with 'mark'
+    var template = `
+    if (char.crashWith(mark)) { 
+        if (markHandle) {mark.follow(char)} 
+        if (area.keys && area.keys[83]) {markHandle = false; mark.angleInc = 0;mark.speed = 0;} 
+        else if (area.keys && area.keys[68]) {markHandle = true} 
+    }
+    `
+    var result = "";
+    for (var x = 0; x < objA.length; x++) {
+        result += template.replace(/mark/g, objA[x])
+    }
+    return result
+}
 function updateArea() {
     area.clear();
     turn();
     char.update();
-    if (char.crashWith(ob)) { 
-        if (obHandle) {ob.follow(char)} 
-        if (area.keys && area.keys[83]) {obHandle = false; ob.angleInc = 0;ob.speed = 0;} 
-        else if (area.keys && area.keys[68]) {obHandle = true} 
-    } else if (char.crashWith(ob2)) {
-        if (ob2Handle) {ob2.follow(char)} 
-        if (area.keys && area.keys[83]) {ob2Handle = false; ob2.angleInc = 0;ob2.speed = 0;} 
-        else if (area.keys && area.keys[68]) {ob2Handle = true} 
-    } else if (char.crashWith(ob3)) {
-        if (ob3Handle) {ob3.follow(char)} 
-        if (area.keys && area.keys[83]) {ob3Handle = false; ob3.angleInc = 0;ob3.speed = 0;} 
-        else if (area.keys && area.keys[68]) {ob3Handle = true} 
-    } 
+    eval(obAll(['ob','ob2','ob3','ob4']));
+    
+    if (ob4.crashWith(ob3) && ob3.crashWith(ob) && ob.crashWith(ob2)) {
+        success();
+    }
+    
     ob.update();
     ob2.update();
     ob3.update();
+    ob4.update();
     img.update();
 }
 
