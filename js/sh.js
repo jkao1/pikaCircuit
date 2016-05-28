@@ -17,10 +17,10 @@ var ob, ob2, ob3, char;
 var img;
 
 function start() { // initiates game
-    ob = new component(5, 40, "red", 400, 400); 
+    ob = new component(15, 200, "red", 400, 400); 
     ob2 = new component(20, 20, "blue", 300, 400);
     ob3 = new component(20, 20, "yellow", 200, 400);
-    char = new component(15, 15, "#fa8940", 250, 265); 
+    char = new component(15, 15, "#fa8940", 250, 265);
     img = new component(30, 30, "../img/resistor.png",100, 100, 'img');
     area.start();
 }
@@ -57,7 +57,7 @@ function component(width, height, color, x, y, type) {
     if (type == "img") {
         this.image = new Image();
         this.image.src = color;
-    }
+    } 
     this.width = width;
     this.height = height;
     this.x = x; 
