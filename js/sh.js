@@ -16,6 +16,7 @@ ob = wires
 ob2 = transistor
 ob3 = lightblub
 ob4 = battery
+
 */
 
 var ob, ob2, ob3, char;
@@ -90,30 +91,7 @@ function component(width, height, color, x, y, type) {
             this.y -= this.speed * Math.cos(this.angle);   
         }
     }  
-    this.char_crash = function(otherobj) {
-        var myleft = this.x - (this.width / 2);
-        var myright = this.x + (this.width / 2);
-        var mytop = this.y - (this.height / 2);
-        var mybottom = this.y + (this.height / 2);
-        
-        var otherleft = otherobj.x - (otherobj.height / 2);
-        var otherright = otherobj.x + (otherobj.height / 2);
-        var othertop = otherobj.y - (otherobj.width / 2);
-        var otherbottom = otherobj.y + (otherobj.width / 2);
-        
-        var a,b,c,d;
-        a = mytop > otherbottom;
-        b = myleft > otherright;
-        c = myright < otherleft;
-        d = mybottom < othertop;
-       // document .getElementById("track").innerHTML = Math.floor(myleft) + "," + Math.floor(myright) + "," + Math.floor(mybottom) + "," + Math.floor(myright);
-        var crash = true;
-        if (a||b||c||d) {
-            crash = false;
-        } 
-        return crash;
-    }
-    this.obj_crash = function(otherobj) {
+    this.crash = function(otherobj) {
         var myleft = this.x - (this.height / 2);
         var myright = this.x + (this.height / 2);
         var mytop = this.y - (this.width / 2);
@@ -130,6 +108,9 @@ function component(width, height, color, x, y, type) {
         c = myright < otherleft;
         d = mybottom < othertop;
        // document .getElementById("track").innerHTML = Math.floor(myleft) + "," + Math.floor(myright) + "," + Math.floor(mybottom) + "," + Math.floor(myright);
+        if (otherobj == ob4) {
+            document.getElementById('track1').innerHTML = mytop+','+otherbottom;
+        }
         var crash = true;
         if (a||b||c||d) {
             crash = false;
@@ -169,7 +150,7 @@ function turn() {
 function obAll(objA) {
     // all replaced is marked with 'mark'
     var template = `
-    if (char.char_crash(mark)) { 
+    if (char.crash(mark)) { 
         if (markHandle) {mark.follow(char)} 
         if (area.keys && area.keys[83]) {markHandle = false; mark.angleInc = 0;mark.speed = 0;} 
         else if (area.keys && area.keys[68]) {markHandle = true} 
@@ -187,9 +168,9 @@ function updateArea() {
     char.update();
     eval(obAll(['ob','ob2','ob3','ob4']));
     
-    a = ob.obj_crash(ob2);
-    b = ob2.obj_crash(ob3);
-    c = ob3.obj_crash(ob4);
+    a = ob.crash(ob2);
+    b = ob2.crash(ob3);
+    c = ob3.crash(ob4);
     
     var tracker = document.getElementById('track');
     
