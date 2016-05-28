@@ -21,7 +21,7 @@ function start() { // initiates game
     ob2 = new component(20, 20, "blue", 300, 400);
     ob3 = new component(20, 20, "yellow", 200, 400);
     char = new component(15, 15, "#fa8940", 250, 265); 
-    img = new component(30, 30, "img/resistor.png",100, 100, 'img');
+    img = new component(30, 30, "../img/resistor.png",100, 100, 'img');
     area.start();
 }
 
