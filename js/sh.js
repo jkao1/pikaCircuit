@@ -22,10 +22,10 @@ var ob, ob2, ob3, char;
 var img;
 
 function start() { // initiates game
-    ob = new component(10, 180, "#D7912F", 400, 400); 
+    ob = new component(10, 180, "#D7912F", 400, 405); 
     ob2 = new component(40, 80, "#B7641F", 300, 400);
-    ob3 = new component(60, 60, "#DE401E", 200, 400);
-    ob4 = new component(80, 100, "#006C4C", 434, 234);
+    ob3 = new component(60, 80, "#DE401E", 220, 400);
+    ob4 = new component(10, 100, "#006C4C", 434, 234);
     char = new component(15, 15, "#fa8940", 250, 265);
     // img = new component(30, 30, "../img/resistor.png",100, 100, 'img');
     area.start();
@@ -73,7 +73,7 @@ function component(width, height, color, x, y, type) {
     this.angleInc = 0; 
     this.update = function() {
         ctx = area.context;
-        if (type == "image") {
+        if (type == "img") {
             ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
         } else {
             ctx.save(); 
@@ -90,17 +90,48 @@ function component(width, height, color, x, y, type) {
             this.y -= this.speed * Math.cos(this.angle);   
         }
     }  
-    this.crashWith = function(otherobj) {
+    this.char_crash = function(otherobj) {
         var myleft = this.x - (this.width / 2);
-        var myright = this.x + (this.width);
+        var myright = this.x + (this.width / 2);
         var mytop = this.y - (this.height / 2);
         var mybottom = this.y + (this.height / 2);
-        var otherleft = otherobj.x - (otherobj.width / 2);
-        var otherright = otherobj.x + (otherobj.width / 2);
-        var othertop = otherobj.y - (otherobj.height / 2);
-        var otherbottom = otherobj.y + (otherobj.height / 2);
+        
+        var otherleft = otherobj.x - (otherobj.height / 2);
+        var otherright = otherobj.x + (otherobj.height / 2);
+        var othertop = otherobj.y - (otherobj.width / 2);
+        var otherbottom = otherobj.y + (otherobj.width / 2);
+        
+        var a,b,c,d;
+        a = mytop > otherbottom;
+        b = myleft > otherright;
+        c = myright < otherleft;
+        d = mybottom < othertop;
+       // document .getElementById("track").innerHTML = Math.floor(myleft) + "," + Math.floor(myright) + "," + Math.floor(mybottom) + "," + Math.floor(myright);
         var crash = true;
-        if ((mytop > otherbottom) || (myleft > otherright) || (myright < otherleft) || (mybottom < othertop)) {
+        if (a||b||c||d) {
+            crash = false;
+        } 
+        return crash;
+    }
+    this.obj_crash = function(otherobj) {
+        var myleft = this.x - (this.height / 2);
+        var myright = this.x + (this.height / 2);
+        var mytop = this.y - (this.width / 2);
+        var mybottom = this.y + (this.width / 2);
+        
+        var otherleft = otherobj.x - (otherobj.height / 2);
+        var otherright = otherobj.x + (otherobj.height / 2);
+        var othertop = otherobj.y - (otherobj.width / 2);
+        var otherbottom = otherobj.y + (otherobj.width / 2);
+        
+        var a,b,c,d;
+        a = mytop > otherbottom;
+        b = myleft > otherright;
+        c = myright < otherleft;
+        d = mybottom < othertop;
+       // document .getElementById("track").innerHTML = Math.floor(myleft) + "," + Math.floor(myright) + "," + Math.floor(mybottom) + "," + Math.floor(myright);
+        var crash = true;
+        if (a||b||c||d) {
             crash = false;
         } 
         return crash;
@@ -138,7 +169,7 @@ function turn() {
 function obAll(objA) {
     // all replaced is marked with 'mark'
     var template = `
-    if (char.crashWith(mark)) { 
+    if (char.char_crash(mark)) { 
         if (markHandle) {mark.follow(char)} 
         if (area.keys && area.keys[83]) {markHandle = false; mark.angleInc = 0;mark.speed = 0;} 
         else if (area.keys && area.keys[68]) {markHandle = true} 
@@ -156,7 +187,15 @@ function updateArea() {
     char.update();
     eval(obAll(['ob','ob2','ob3','ob4']));
     
-    if (ob4.crashWith(ob3) && ob3.crashWith(ob) && ob.crashWith(ob2)) {
+    a = ob.obj_crash(ob2);
+    b = ob2.obj_crash(ob3);
+    c = ob3.obj_crash(ob4);
+    
+    var tracker = document.getElementById('track');
+    
+    tracker.innerHTML = a+','+b+','+c;
+    
+    if (a && b && c) {
         success();
     }
     
