@@ -169,6 +169,16 @@ function component(width, height, color, x, y, type) {
         var diffY = this.y - obj.y;
         return (this.x - obj.x) + (this.y - obj.y);
     }
+    this.scaleto = function() {
+        ctx = area.context;
+        ctx.save();
+        ctx.translate(this.x,this.y);
+        ctx.scale(2,2);
+        ctx.rotate(this.angle);
+        ctx.drawImage(this.image, this.width / -2, this.height / -2, this.width, this.height);
+        ctx.restore();
+        area.stop();
+    }
 }
 
 var inc = 0; // angleInc's increment
@@ -246,6 +256,12 @@ function updateArea() {
 
     if (wire03.crash_horz(retr05) && wire03.crash_horz(sett06)) {
         success();
+        can = document.getElementById('canvas');
+        can.style.transitionDuration = "6s";
+        can.style.transform = "scale(3,3)";
+        char.x = 480;
+        char.y = 260;
+        char.angleInc = 5;
     }
     
     turn();
@@ -255,6 +271,7 @@ function updateArea() {
         wire03.snap(pl_wire03);
         Main.wire03.snap = true;
     }
+
 }
 
 // so space doesn't scroll the page
@@ -273,6 +290,7 @@ function success() {
     function off() {
         Main.lemd06.color = "#cca300";
     }
+    // flickering
     setTimeout(on,200);
     setTimeout(off,500);
     setTimeout(on,600);
