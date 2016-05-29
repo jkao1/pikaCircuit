@@ -20,6 +20,10 @@ batt = battery
 */
 
 function start() { // initiates game
+    sett01 = new component(100, 10, "#d7912f", 150, 100);
+    sett02 = new component(10, 650, "#d7912f", 475, 55); 
+    sett03 = new component(100, 10, "#d7912f", 800, 100);
+    
     pl_wire01 = new component(150, 10, "#abb482", 150, 300);
     pl_wire02 = new component(10, 180, "#abb482", 240, 369); 
     pl_wire03 = new component(10, 440, "#abb482", 580, 369); 
@@ -32,7 +36,7 @@ function start() { // initiates game
     wire04 = new component(184, 10, "#d7912f", 900, 200); 
     retr05 = new component(25, 115.5, "retr05", 450, 455, "img");
     
-    lemd06 = new component(80, 80, "lemd06", 800, 180, "img");
+    lemd06 = new component(80, 80, "yellow", 800, 180, "circle");
     batt07 = new component(115, 80, "batt07", 150, 180, "img");
     
     char = new component(15, 15, "#fa8940", 250, 265);
@@ -71,7 +75,9 @@ function component(width, height, color, x, y, type) {
     this.type = type;
     if (type == "img") {
         this.image = document.getElementById(color);
-    } 
+    } else if (type == "circle") {
+        
+    }
     this.width = width;
     this.height = height;
     this.x = x; 
@@ -93,6 +99,11 @@ function component(width, height, color, x, y, type) {
             this.angle += this.angleInc * Math.PI / 180;
             this.x += this.speed * Math.sin(this.angle);
             this.y -= this.speed * Math.cos(this.angle); 
+        } else if (type == "circle") {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, width / 2, 0, 2*Math.PI);
+            ctx.fillStyle = Main.lemd06.color;
+            ctx.fill();
         } else {
             ctx.save(); 
             // canvas receives char properties (loc, deg, color)
@@ -108,28 +119,6 @@ function component(width, height, color, x, y, type) {
             this.y -= this.speed * Math.cos(this.angle);   
         }
     }  
-    this.crash_vert = function(otherobj) {
-        var myleft = this.x - (this.height / 2);
-        var myright = this.x + (this.height / 2);
-        var mytop = this.y - (this.width / 2);
-        var mybottom = this.y + (this.width / 2);
-        
-        var otherleft = otherobj.x - (otherobj.width / 2);
-        var otherright = otherobj.x + (otherobj.width / 2);
-        var othertop = otherobj.y - (otherobj.height / 2);
-        var otherbottom = otherobj.y + (otherobj.height / 2);
-        
-        var a,b,c,d;
-        a = mytop > otherbottom;
-        b = myleft > otherright;
-        c = myright < otherleft;
-        d = mybottom < othertop;
-        var crash = true;
-        if (a||b||c||d) {
-            crash = false;
-        } 
-        return crash;
-    }
     this.crash_horz = function(otherobj) {
         var myleft = this.x - (this.height / 2);
         var myright = this.x + (this.height / 2);
@@ -154,6 +143,15 @@ function component(width, height, color, x, y, type) {
         } 
         return crash;
     }
+    this.crash_snap = function(otherobj) {
+        var diffX = Math.abs(this.x - otherobj.x);
+        var diffY = Math.abs(this.y - otherobj.y);
+        crash = false;
+        if (diffX < 30 && diffY < 30) {
+            crash = true;
+        }
+        return crash;
+    }
     this.follow = function(obj) {
         this.x = obj.x + 7;
         this.y = obj.y + 7;
@@ -167,7 +165,7 @@ function component(width, height, color, x, y, type) {
     }
     this.distance = function(obj) {
         var diffX = this.x - obj.x;
-        var diffY = this.y - obj.y
+        var diffY = this.y - obj.y;
         return (this.x - obj.x) + (this.y - obj.y);
     }
 }
@@ -177,24 +175,27 @@ var angleSpeed = 0;
 
 var Main = {
     wire01: {
-        att: true,
+        att: false,
         snap: false,
     },
     wire02: {
-        att: true,
+        att: false,
         snap: false,
     },
     wire03: {
-        att: true,
+        att: false,
         snap: false,
     },
     wire04: {
-        att: true,
+        att: false,
         snap: false,
     },
     retr05: {
-        att: true,
+        att: false,
         snap: false,
+    },
+    lemd06: {
+        color: '#cca300',
     }
 }
 
@@ -233,10 +234,10 @@ function elem_update(objA) {
 
 function updateArea() {
     area.clear();
-    
     eval(elem_crash(['wire01','wire02','wire03','retr05','wire04'],'horz'));    
     eval(elem_update(
-        ['pl_wire01','pl_wire02','pl_wire03','pl_wire04','pl_retr05',
+        ['sett01','sett02','sett03',
+         'pl_wire01','pl_wire02','pl_wire03','pl_wire04','pl_retr05',
          'wire01','wire02','wire03','wire04',
          'retr05','lemd06','batt07']
          )
@@ -251,28 +252,30 @@ function updateArea() {
     
     if ( a&&b&&c&&d&&e&&f ) {
         success();
+    } else {
+        reset();
     }
     
     turn();
     char.update();
     
-    if (wire01.crash_horz(pl_wire01)) {
+    if (wire01.crash_snap(pl_wire01)) {
         wire01.snap(pl_wire01);
         Main.wire01.snap = true;
     }
-    if (wire02.crash_horz(pl_wire02)) {
+    if (wire02.crash_snap(pl_wire02)) {
         wire02.snap(pl_wire02);
         Main.wire02.snap = true;
     }
-    if (wire03.crash_horz(pl_wire03)) {
+    if (wire03.crash_snap(pl_wire03)) {
         wire03.snap(pl_wire03);
         Main.wire03.snap = true;
     }
-    if (wire04.crash_horz(pl_wire04)) {
+    if (wire04.crash_snap(pl_wire04)) {
         wire04.snap(pl_wire04);
         Main.wire04.snap = true;
     }
-    if (retr05.crash_horz(pl_retr05)) {
+    if (retr05.crash_snap(pl_retr05)) {
         retr05.snap(pl_retr05);
         Main.retr05.snap = true;
     }
@@ -288,7 +291,8 @@ window.onkeydown = function(e) {
 
 function success() {
     document.getElementById('canvas').style.backgroundColor = '#28920F';
+    Main.lemd06.color = "yellow";
 }
 function reset() {
-    document.getElementById('canvas').style.backgroundColor = '#4da086';
+    document.getElementById('canvas').style.backgroundColor = '#BEC991';
 }
