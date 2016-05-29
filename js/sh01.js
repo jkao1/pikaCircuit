@@ -256,6 +256,12 @@ function updateArea() {
     
     if ( a&&b&&c&&d&&e&&f ) {
         success();
+        can = document.getElementById('canvas');
+        can.style.transitionDuration = "6s";
+        can.style.transform = "scale(3,3)";
+        char.x = 480;
+        char.y = 260;
+        char.angleInc = 5;
     } else {
         reset();
     }
