@@ -28,8 +28,8 @@ function start() { // initiates game
     pl_wire02 = new component(10, 240, "#abb482", 270, 369); 
     pl_wire03 = new component(180, 10, "#abb482", 457, 284); 
     pl_wire04 = new component(10, 300, "#abb482", 677, 194); 
-    pl_retr05 = new component(10, 80, "#bec991", 420, 369);
-    pl_retr06 = new component(10, 80, "#bec991", 497, 194);
+    pl_retr05 = new component(20, 80, "#bec991", 420, 369);
+    pl_retr06 = new component(20, 80, "#bec991", 497, 194);
     
     wire01 = new component(150, 10, "#d7912f", 70, 300); 
     wire02 = new component(10, 240, "#d7912f", 480, 515); 
