@@ -20,20 +20,20 @@ batt = battery
 */
 
 function start() { // initiates game
-    pl_wire01 = new component(150, 20, "#BEC991", 150, 400);
-    pl_wire02 = new component(20, 180, "#BEC991", 240, 465); 
-    pl_wire03 = new component(20, 480, "#BEC991", 600, 455); 
-    pl_wire04 = new component(150, 20, "#BEC991", 800, 382); 
-    pl_retr05 = new component(20, 80, "#BEC991", 350, 465);
+    pl_wire01 = new component(150, 10, "#ABB482", 150, 300);
+    pl_wire02 = new component(10, 180, "#ABB482", 240, 369); 
+    pl_wire03 = new component(10, 480, "#ABB482", 600, 355); 
+    pl_wire04 = new component(150, 10, "#ABB482", 800, 282); 
+    pl_retr05 = new component(10, 80, "#BEC991", 350, 365);
     
-    wire01 = new component(150, 20, "#D7912F", 220, 300); 
-    wire02 = new component(20, 180, "#D7912F", 240, 565); 
-    wire03 = new component(20, 480, "#D7912F", 600, 555); 
-    wire04 = new component(150, 20, "#D7912F", 800, 582); 
-    retr05 = new component(25, 115.5, "retrimg", 450, 465, "img");
+    wire01 = new component(150, 10, "#D7912F", 70, 300); 
+    wire02 = new component(10, 180, "#D7912F", 480, 495); 
+    wire03 = new component(10, 480, "#D7912F", 500, 525); 
+    wire04 = new component(150, 10, "#D7912F", 900, 200); 
+    retr05 = new component(25, 115.5, "retrimg", 450, 455, "img");
     
-    lemd06 = new component(80, 80, "lightimg", 800, 280, "img");
-    batt07 = new component(90, 80, "battimg", 150, 280, "img");
+    lemd06 = new component(80, 80, "lightimg", 800, 180, "img");
+    batt07 = new component(115, 80, "battimg", 150, 180, "img");
     
     char = new component(15, 15, "#fa8940", 250, 265);
 
@@ -155,9 +155,6 @@ function component(width, height, color, x, y, type) {
     this.follow = function(obj) {
         this.x = obj.x + 7;
         this.y = obj.y + 7;
-        // this.angle = obj.angle;
-        // this.angleInc = obj.angleInc;
-        this.speed = obj.speed;
     }
     this.snap = function(obj) {
         this.x = obj.x;
