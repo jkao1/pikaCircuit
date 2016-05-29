@@ -6,6 +6,6 @@
 
 ###Random Inspirations
 
-###Change Log
-- updated README.md
-
+###Copy
+Resistor Tutorial:
+A resistor implements electrical resistance as a circuit element. They may be used to reduce current flow, and may act to lower voltage levels within circuits.
