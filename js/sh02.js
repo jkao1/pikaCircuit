@@ -24,14 +24,14 @@ function start() { // initiates game
     sett02 = new component(10, 650, "#d7912f", 475, 55); 
     sett03 = new component(100, 10, "#d7912f", 800, 100);
     
-    pl_wire01 = new component(150, 10, "#abb482", 150, 300);
+    pl_wire01 = new component(148, 10, "#abb482", 150, 300);
     pl_wire02 = new component(10, 240, "#abb482", 270, 369); 
     pl_wire03 = new component(180, 10, "#abb482", 457, 284); 
     pl_wire04 = new component(10, 300, "#abb482", 677, 194); 
     pl_retr05 = new component(10, 80, "#bec991", 420, 369);
     pl_capa06 = new component(10, 80, "#bec991", 497, 194);
     
-    wire01 = new component(150, 10, "#d7912f", 450, 480); 
+    wire01 = new component(148, 10, "#d7912f", 450, 480); 
     wire02 = new component(10, 240, "#d7912f", 700, 370); 
     wire03 = new component(180, 10, "#d7912f", 517, 460); 
     wire04 = new component(10, 300, "#d7912f", 700, 300); 
