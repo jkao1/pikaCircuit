@@ -305,8 +305,29 @@ window.onkeydown = function(e) {
 
 function success() {
     document.getElementById('canvas').style.backgroundColor = '#28920F';
-    Main.lemd07.color = "yellow";
+    function on() {
+        Main.lemd07.color = "yellow";
+    }
+    function off() {
+        Main.lemd07.color = "#cca300";
+    }
+    setTimeout(on,200);
+    setTimeout(off,500);
+    setTimeout(on,600);
+    setTimeout(off,700);
+    setTimeout(on,800);
+    setTimeout(on,850);
+    setTimeout(off,900);
+    setTimeout(on,1000);
+    setTimeout(off,1200);
+    setTimeout(on,1250);
+    setTimeout(nextlevel, 3000);
 }
+
 function reset() {
     document.getElementById('canvas').style.backgroundColor = '#BEC991';
+}
+
+function nextlevel() {
+     window.location.href = "win.html";
 }
