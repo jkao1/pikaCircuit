@@ -29,14 +29,14 @@ function start() { // initiates game
     pl_wire03 = new component(180, 10, "#abb482", 457, 284); 
     pl_wire04 = new component(10, 300, "#abb482", 677, 194); 
     pl_retr05 = new component(10, 80, "#bec991", 420, 369);
-    pl_retr06 = new component(20, 80, "#bec991", 497, 194);
+    pl_capa06 = new component(20, 80, "#bec991", 497, 194);
     
     wire01 = new component(150, 10, "#d7912f", 70, 300); 
     wire02 = new component(10, 240, "#d7912f", 480, 515); 
     wire03 = new component(180, 10, "#d7912f", 517, 325); 
     wire04 = new component(10, 300, "#d7912f", 700, 300); 
     retr05 = new component(20, 80, "retr05", 450, 445, "img");
-    retr06 = new component(20, 80, "retr05", 450, 485, "img");
+    capa06 = new component(80, 80, "capa06", 450, 485, "img");
     
     lemd07 = new component(80, 80, "yellow", 800, 180, "circle");
     batt08 = new component(115, 80, "batt07", 150, 180, "img");
@@ -195,7 +195,7 @@ var Main = {
         att: false,
         snap: false,
     },
-    retr06: {
+    capa06: {
         att: false,
         snap: false,
     },
@@ -243,12 +243,12 @@ function elem_update(objA) {
 
 function updateArea() {
     area.clear();
-    eval(elem_crash(['wire01','wire02','wire03','wire04','retr05','retr06'],'horz'));    
+    eval(elem_crash(['wire01','wire02','wire03','wire04','retr05','capa06'],'horz'));    
     eval(elem_update(
         ['sett01','sett02','sett03',
-         'pl_wire01','pl_wire02','pl_wire03','pl_wire04','pl_retr05','pl_retr06',
+         'pl_wire01','pl_wire02','pl_wire03','pl_wire04','pl_retr05','pl_capa06',
          'wire01','wire02','wire03','wire04',
-         'retr05','retr06', 'lemd07','batt08']
+         'retr05','capa06', 'lemd07','batt08']
          )
       );
     
@@ -256,11 +256,11 @@ function updateArea() {
     b = wire01.crash_horz(wire02);
     c = wire02.crash_horz(retr05); 
     d = retr05.crash_horz(wire03);
-    e = wire03.crash_horz(retr06);
-    f = retr06.crash_horz(wire04);
+    e = wire03.crash_horz(capa06);
+    f = capa06.crash_horz(wire04);
     g = wire04.crash_horz(lemd07);
     
-    if ( true&&!done ) {
+    if ( a&&b&&c&&d&&e&&f&&g&&!done ) {
         success();
         done = true;
     }
@@ -288,9 +288,9 @@ function updateArea() {
         retr05.snap(pl_retr05);
         Main.retr05.snap = true;
     }
-    if (retr06.crash_snap(pl_retr06)) {
-        retr06.snap(pl_retr06);
-        Main.retr06.snap = true;
+    if (capa06.crash_snap(pl_capa06)) {
+        capa06.snap(pl_capa06);
+        Main.capa06.snap = true;
     }
 }
 
