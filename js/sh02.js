@@ -29,14 +29,14 @@ function start() { // initiates game
     pl_wire03 = new component(180, 10, "#abb482", 457, 284); 
     pl_wire04 = new component(10, 300, "#abb482", 677, 194); 
     pl_retr05 = new component(10, 80, "#bec991", 420, 369);
-    pl_capa06 = new component(20, 80, "#bec991", 497, 194);
+    pl_capa06 = new component(10, 80, "#bec991", 497, 194);
     
-    wire01 = new component(150, 10, "#d7912f", 70, 300); 
-    wire02 = new component(10, 240, "#d7912f", 480, 515); 
-    wire03 = new component(180, 10, "#d7912f", 517, 325); 
+    wire01 = new component(150, 10, "#d7912f", 450, 480); 
+    wire02 = new component(10, 240, "#d7912f", 700, 370); 
+    wire03 = new component(180, 10, "#d7912f", 517, 460); 
     wire04 = new component(10, 300, "#d7912f", 700, 300); 
-    retr05 = new component(20, 80, "retr05", 450, 445, "img");
-    capa06 = new component(80, 80, "capa06", 450, 485, "img");
+    retr05 = new component(20, 80, "retr05", 300, 400, "img");
+    capa06 = new component(80, 80, "capa06", 300, 500, "img");
     
     lemd07 = new component(80, 80, "yellow", 800, 180, "circle");
     batt08 = new component(115, 80, "batt07", 150, 180, "img");
