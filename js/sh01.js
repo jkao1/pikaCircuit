@@ -20,18 +20,27 @@ batt = battery
 */
 
 function start() { // initiates game
-    sett01 = new component(100, 10, "#d7912f", 150, 100);
-    sett02 = new component(10, 650, "#d7912f", 475, 55); 
-    sett03 = new component(100, 10, "#d7912f", 800, 100);
-
-    pl_wire03 = new component(10, 440, "#abb482", 580, 369); 
+    sett01 = new component(240, 10, "#d7912f", 150, 170);
+    sett02 = new component(10, 100, "#d7912f", 200, 55); 
+    sett03 = new component(180, 10, "#d7912f", 250, 140);
+    sett04 = new component(150, 10, "#d7912f", 150, 450);
+    sett05 = new component(10, 180, "#d7912f", 240, 519); 
+    sett06 = new component(444, 10, "#d7912f", 800, 302); 
+    sett07 = new component(150, 10, "#d7912f", 550, 160); 
+    sett08 = new component(10, 300, "#d7912f", 395, 230); 
     
-    wire03 = new component(10, 440, "#d7912f", 500, 525); 
+    sett09 = new component(10, 250, "#d7912f", 670, 85); 
     
+    pl_wire03 = new component(10, 440, "#abb482", 580, 519); 
+    pl_retr05 = new component(10, 80, "#bec991", 350, 519);
+    
+    wire03 = new component(10, 440, "#dfa758", 500, 325); 
+    
+    retr05 = new component(25, 115.5, "retr05", 350, 519, "img");
     lemd06 = new component(80, 80, "yellow", 800, 180, "circle");
-    batt07 = new component(115, 80, "batt07", 150, 180, "img");
+    batt07 = new component(115, 80, "batt07", 150, 330, "img");
     
-    char = new component(15, 15, "#fa8940", 250, 265);
+    char = new component(15, 15, "rgb(69,61,65)", 250, 265);
 
     area.start();
 }
@@ -166,10 +175,25 @@ var inc = 0; // angleInc's increment
 var angleSpeed = 0;
 
 var Main = {
+    wire01: {
+        att: false,
+        snap: false,
+    },
+    wire02: {
+        att: false,
+        snap: false,
+    },
     wire03: {
         att: false,
         snap: false,
     },
+    wire04: {
+        att: false,
+        snap: false,
+    },
+    lemd06: {
+        color: '#cca300',
+    }
 }
 
 function turn() {
@@ -209,26 +233,17 @@ function updateArea() {
     area.clear();
     eval(elem_crash(['wire03'],'horz'));    
     eval(elem_update(
-        ['sett01','sett02','sett03',
+        ['sett01','sett02','sett03','sett04','sett05','sett06','sett07','sett08','sett09',
          'pl_wire03',
          'wire03',
          'retr05','lemd06','batt07']
          )
       );
-    /*
-    a = batt07.crash_horz(wire01);
-    b = wire01.crash_horz(wire02);
-    c = wire02.crash_horz(retr05); 
-    d = retr05.crash_horz(wire03);
-    e = wire03.crash_horz(wire04);
-    f = wire04.crash_horz(lemd06);
-    
-    if ( a&&b&&c&&d&&e&&f ) {
+
+    if (wire03.crash_horz(retr05) && wire03.crash_horz(sett06)) {
         success();
-    } else {
-        reset();
     }
-    */
+    
     turn();
     char.update();
     
@@ -248,8 +263,24 @@ window.onkeydown = function(e) {
 
 function success() {
     document.getElementById('canvas').style.backgroundColor = '#28920F';
-    Main.lemd06.color = "yellow";
+    function on() {
+        Main.lemd06.color = "yellow";
+    }
+    function off() {
+        Main.lemd06.color = "#cca300";
+    }
+    setTimeout(on,200);
+    setTimeout(off,500);
+    setTimeout(on,600);
+    setTimeout(off,700);
+    setTimeout(on,800);
+    setTimeout(on,850);
+    setTimeout(off,900);
+    setTimeout(on,1000);
+    setTimeout(off,1200);
+    setTimeout(on,1250);
 }
 function reset() {
     document.getElementById('canvas').style.backgroundColor = '#BEC991';
 }
+success();
