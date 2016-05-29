@@ -32,11 +32,11 @@ function start() { // initiates game
     pl_retr06 = new component(10, 80, "#bec991", 497, 194);
     
     wire01 = new component(150, 10, "#d7912f", 70, 300); 
-    wire02 = new component(10, 240, "#d7912f", 480, 495); 
-    wire03 = new component(180, 10, "#d7912f", 500, 525); 
-    wire04 = new component(10, 300, "#d7912f", 900, 200); 
-    retr05 = new component(10, 80, "retr05", 450, 455, "img");
-    retr06 = new component(10, 80, "retr05", 450, 455, "img");
+    wire02 = new component(10, 240, "#d7912f", 480, 515); 
+    wire03 = new component(180, 10, "#d7912f", 517, 325); 
+    wire04 = new component(10, 300, "#d7912f", 700, 300); 
+    retr05 = new component(10, 80, "retr05", 450, 445, "img");
+    retr06 = new component(10, 80, "retr05", 450, 485, "img");
     
     lemd07 = new component(80, 80, "yellow", 800, 180, "circle");
     batt08 = new component(115, 80, "batt07", 150, 180, "img");
@@ -211,10 +211,6 @@ function turn() {
     if (area.keys && area.keys[39]) {char.angleInc = 5; }
     if (area.keys && area.keys[38]) {char.speed= 4; }
     if (area.keys && area.keys[40]) {char.speed= -4; }
-    if (char.x >= 960) {char.angleInc = 180}
-    if (char.x <= 0) {char.angleInc = 180}
-    if (char.y >= 560) {char.angleInc = 180}
-    if (char.y <= 0) {char.angleInc = 180}
 }
 
 function elem_crash(objA,ornt) {
@@ -291,7 +287,7 @@ function updateArea() {
     }
     if (retr06.crash_snap(pl_retr06)) {
         retr06.snap(pl_retr06);
-        Main.retr05.snap = true;
+        Main.retr06.snap = true;
     }
 }
 
