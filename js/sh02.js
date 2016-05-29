@@ -324,7 +324,7 @@ function success() {
     setTimeout(on,2000);
     setTimeout(on,2500);
     setTimeout(off,3000);
-    setTimeout(nextlevel, 10000);
+    setTimeout(nextlevel, 7000);
 }
 
 function reset() {
