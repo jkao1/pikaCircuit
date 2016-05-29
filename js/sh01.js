@@ -283,8 +283,13 @@ function success() {
     setTimeout(on,1000);
     setTimeout(off,1200);
     setTimeout(on,1250);
+    setTimeout(nextlevel, 3000);
 }
+
 function reset() {
     document.getElementById('canvas').style.backgroundColor = '#BEC991';
 }
-success();
+
+function nextlevel() {
+     window.location.href = "sh02.html";
+}
