@@ -9,3 +9,5 @@
 ###Copy
 Resistor Tutorial:
 A resistor implements electrical resistance as a circuit element. They may be used to reduce current flow, and may act to lower voltage levels within circuits.
+Copper Wires:
+Copper wires are laminated onto a circuit board, making them "printed". These are a lot more easy to organize and use than regular wires.
