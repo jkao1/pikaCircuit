@@ -51,7 +51,7 @@ var area = { // setting up canvas and its properties
         this.canvas.height = 560;
         this.canvas.id = 'canvas';
         this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        document.body.insertBefore(this.canvas, document.body.childNodes[2]);
         this.frameNo = 0;
         this.interval = setInterval(updateArea, 20); 
         // keyboard stuff

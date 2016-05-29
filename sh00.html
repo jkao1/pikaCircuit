@@ -13,6 +13,23 @@
         body {
             background: #d7912f;
         }
+        div {
+            padding: 20px;
+        }
+        li {
+            display: inline;
+            padding: 15px;
+            background: #CC0000;
+            font-family: Montserrat, Open Sans;
+            font-size: 150%;
+        }
+        li a {
+            color: #FFFFFF;
+            
+        }
+        li:hover{
+            background: #FF0000;
+        }
     </style>
     
     <link href="css/sh.css" rel="stylesheet">
@@ -21,9 +38,15 @@
 </head>
 
 <body onload="start()">
+    <div id=nav height=100px>
+    <ul>
+    <li><a href=sh00.html>Level 1</a></li>
+    <li><a href=sh01.html>Level 2</a></li>
+    <li><a href=sh02.html>Level 3</a></li>
+    </ul>
+    </div>
     <script src="js/sh00.js"></script>
     <br>
-    <button onclick="zoom()">hi</button>
     <div style="font-family:Open Sans;color:white;">
     <h1>Circuits</h1>
     <p style="font-size: 20px;">Ciruits must be closed to allow continuous electron flow. This powers the lightbulb.</p>
