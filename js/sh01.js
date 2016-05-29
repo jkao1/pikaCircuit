@@ -203,6 +203,10 @@ function turn() {
     if (area.keys && area.keys[39]) {char.angleInc = 5; }
     if (area.keys && area.keys[38]) {char.speed= 4; }
     if (area.keys && area.keys[40]) {char.speed= -4; }
+    if (char.x >= 960) {char.angleInc = 180}
+    if (char.x <= 0) {char.angleInc = 180}
+    if (char.y >= 560) {char.angleInc = 180}
+    if (char.y <= 0) {char.angleInc = 180}
 }
 
 function elem_crash(objA,ornt) {
