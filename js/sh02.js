@@ -18,7 +18,7 @@ lemd06 = lightblub
 batt = battery
 
 */
-
+var done = false;
 function start() { // initiates game
     sett01 = new component(100, 10, "#d7912f", 150, 100);
     sett02 = new component(10, 650, "#d7912f", 475, 55); 
@@ -260,10 +260,9 @@ function updateArea() {
     f = retr06.crash_horz(wire04);
     g = wire04.crash_horz(lemd07);
     
-    if ( a&&b&&c&&d&&e&&f&&8 ) {
+    if ( true&&!done ) {
         success();
-    } else {
-        reset();
+        done = true;
     }
     
     turn();
@@ -311,16 +310,13 @@ function success() {
     function off() {
         Main.lemd07.color = "#cca300";
     }
-    setTimeout(on,200);
+    on();
     setTimeout(off,500);
-    setTimeout(on,600);
-    setTimeout(off,700);
-    setTimeout(on,800);
-    setTimeout(on,850);
-    setTimeout(off,900);
     setTimeout(on,1000);
-    setTimeout(off,1200);
-    setTimeout(on,1250);
+    setTimeout(off,1500);
+    setTimeout(on,2000);
+    setTimeout(on,2500);
+    setTimeout(off,3000);
     setTimeout(nextlevel, 3000);
 }
 
