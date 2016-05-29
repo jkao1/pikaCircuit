@@ -20,22 +20,6 @@ batt = battery
 */
 
 function start() { // initiates game
-<<<<<<< HEAD
-    pl_wire01 = new component(150, 15, "#abb482", 150, 300);
-    pl_wire02 = new component(15, 180, "#abb482", 240, 367); 
-    pl_wire03 = new component(15, 435, "#abb482", 590, 367); 
-    pl_wire04 = new component(150, 15, "#abb482", 800, 285); 
-    pl_retr05 = new component(40, 80, "#abb482", 350, 365);
-    
-    wire01 = new component(150, 15, "#D7912F", 220, 200); 
-    wire02 = new component(15, 180, "#D7912F", 240, 465); 
-    wire03 = new component(15, 435, "#D7912F", 600, 455); 
-    wire04 = new component(150, 15, "#D7912F", 800, 482); 
-    retr05 = new component(40, 80, "retrimg", 450, 365,'img');
-    
-    lemd06 = new component(60, 80, "#DE401E", 800, 180);
-    batt07 = new component(90, 100, "battimg", 150, 180,'img');
-=======
     pl_wire01 = new component(150, 20, "#BEC991", 150, 400);
     pl_wire02 = new component(20, 180, "#BEC991", 240, 465); 
     pl_wire03 = new component(20, 480, "#BEC991", 600, 455); 
@@ -46,11 +30,10 @@ function start() { // initiates game
     wire02 = new component(20, 180, "#D7912F", 240, 565); 
     wire03 = new component(20, 480, "#D7912F", 600, 555); 
     wire04 = new component(150, 20, "#D7912F", 800, 582); 
-    retr05 = new component(20, 80, "retrimg", 450, 465, "img");
+    retr05 = new component(25, 115.5, "retrimg", 450, 465, "img");
     
-    lemd06 = new component(60, 80, "#DE401E", 800, 280);
+    lemd06 = new component(80, 80, "lightimg", 800, 280, "img");
     batt07 = new component(90, 80, "battimg", 150, 280, "img");
->>>>>>> 1a1eddebabc057271376aca67b016699800acbcf
     
     char = new component(15, 15, "#fa8940", 250, 265);
 
@@ -86,13 +69,9 @@ var area = { // setting up canvas and its properties
 
 function component(width, height, color, x, y, type) {
     this.type = type;
-<<<<<<< HEAD
     if (type == "img") {
         this.image = document.getElementById(color);
     } 
-=======
-    if (type == "img") this.image = document.getElementById(color);
->>>>>>> 1a1eddebabc057271376aca67b016699800acbcf
     this.width = width;
     this.height = height;
     this.x = x; 
@@ -103,17 +82,10 @@ function component(width, height, color, x, y, type) {
     this.update = function() {
         ctx = area.context;
         if (type == "img") {
-<<<<<<< HEAD
-            ctx.save();
-            ctx.translate(this.x, this.y); 
-            ctx.rotate(this.angle);
-            ctx.fillStyle = color;
-=======
             ctx.save(); 
             // canvas receives char properties (loc, deg, color)
             ctx.translate(this.x, this.y); 
             ctx.rotate(this.angle);
->>>>>>> 1a1eddebabc057271376aca67b016699800acbcf
             ctx.drawImage(this.image, this.width / -2, this.height / -2, this.width, this.height);
             // canvas spawns a duplicate char to its own properties
             ctx.restore();
