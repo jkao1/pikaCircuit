@@ -20,26 +20,27 @@ batt = battery
 */
 
 function start() { // initiates game
-    sett01 = new component(100, 10, "#d7912f", 150, 100);
-    sett02 = new component(10, 650, "#d7912f", 475, 55); 
-    sett03 = new component(100, 10, "#d7912f", 800, 100);
+    sett01 = new component(240, 10, "#d7912f", 150, 170);
+    sett02 = new component(10, 100, "#d7912f", 200, 55); 
+    sett03 = new component(180, 10, "#d7912f", 250, 140);
+    sett04 = new component(150, 10, "#d7912f", 150, 450);
+    sett05 = new component(10, 180, "#d7912f", 240, 519); 
+    sett06 = new component(444, 10, "#d7912f", 800, 302); 
+    sett07 = new component(150, 10, "#d7912f", 550, 160); 
+    sett08 = new component(10, 300, "#d7912f", 395, 230); 
     
-    pl_wire01 = new component(150, 10, "#abb482", 150, 300);
-    pl_wire02 = new component(10, 180, "#abb482", 240, 369); 
-    pl_wire03 = new component(10, 440, "#abb482", 580, 369); 
-    pl_wire04 = new component(184, 10, "#abb482", 800, 282); 
-    pl_retr05 = new component(10, 80, "#bec991", 350, 369);
+    sett09 = new component(10, 250, "#d7912f", 670, 85); 
     
-    wire01 = new component(150, 10, "#d7912f", 70, 300); 
-    wire02 = new component(10, 180, "#d7912f", 480, 495); 
-    wire03 = new component(10, 440, "#d7912f", 500, 525); 
-    wire04 = new component(184, 10, "#d7912f", 900, 200); 
-    retr05 = new component(25, 115.5, "retr05", 450, 455, "img");
+    pl_wire03 = new component(10, 440, "#abb482", 580, 519); 
+    pl_retr05 = new component(10, 80, "#bec991", 350, 519);
     
+    wire03 = new component(10, 440, "#dfa758", 500, 325); 
+    
+    retr05 = new component(25, 115.5, "retr05", 350, 519, "img");
     lemd06 = new component(80, 80, "yellow", 800, 180, "circle");
-    batt07 = new component(115, 80, "batt07", 150, 180, "img");
+    batt07 = new component(115, 80, "batt07", 150, 330, "img");
     
-    char = new component(15, 15, "#fa8940", 250, 265);
+    char = new component(15, 15, "rgb(69,61,65)", 250, 265);
 
     area.start();
 }
@@ -190,10 +191,6 @@ var Main = {
         att: false,
         snap: false,
     },
-    retr05: {
-        att: false,
-        snap: false,
-    },
     lemd06: {
         color: '#cca300',
     }
@@ -238,50 +235,25 @@ function elem_update(objA) {
 
 function updateArea() {
     area.clear();
-    eval(elem_crash(['wire01','wire02','wire03','retr05','wire04'],'horz'));    
+    eval(elem_crash(['wire03'],'horz'));    
     eval(elem_update(
-        ['sett01','sett02','sett03',
-         'pl_wire01','pl_wire02','pl_wire03','pl_wire04','pl_retr05',
-         'wire01','wire02','wire03','wire04',
+        ['sett01','sett02','sett03','sett04','sett05','sett06','sett07','sett08','sett09',
+         'pl_wire03',
+         'wire03',
          'retr05','lemd06','batt07']
          )
       );
-    
-    a = batt07.crash_horz(wire01);
-    b = wire01.crash_horz(wire02);
-    c = wire02.crash_horz(retr05); 
-    d = retr05.crash_horz(wire03);
-    e = wire03.crash_horz(wire04);
-    f = wire04.crash_horz(lemd06);
-    
-    if ( a&&b&&c&&d&&e&&f ) {
+
+    if (wire03.crash_horz(retr05) && wire03.crash_horz(sett06)) {
         success();
-    } else {
-        reset();
     }
     
     turn();
     char.update();
     
-    if (wire01.crash_snap(pl_wire01)) {
-        wire01.snap(pl_wire01);
-        Main.wire01.snap = true;
-    }
-    if (wire02.crash_snap(pl_wire02)) {
-        wire02.snap(pl_wire02);
-        Main.wire02.snap = true;
-    }
     if (wire03.crash_snap(pl_wire03)) {
         wire03.snap(pl_wire03);
         Main.wire03.snap = true;
-    }
-    if (wire04.crash_snap(pl_wire04)) {
-        wire04.snap(pl_wire04);
-        Main.wire04.snap = true;
-    }
-    if (retr05.crash_snap(pl_retr05)) {
-        retr05.snap(pl_retr05);
-        Main.retr05.snap = true;
     }
 }
 
@@ -313,6 +285,7 @@ function success() {
     setTimeout(on,1250);
     setTimeout(nextlevel, 3000);
 }
+
 function reset() {
     document.getElementById('canvas').style.backgroundColor = '#BEC991';
 }
