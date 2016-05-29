@@ -40,7 +40,7 @@ function start() { // initiates game
     lemd06 = new component(80, 80, "yellow", 800, 180, "circle");
     batt07 = new component(115, 80, "batt07", 150, 330, "img");
     
-    char = new component(25, 25, "pika", 250, 265, "img");
+    char = new component(40, 40, "pika", 250, 265, "img");
 
     area.start();
 }
