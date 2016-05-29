@@ -52,6 +52,7 @@ var area = { // setting up canvas and its properties
         this.canvas.width = 960;
         this.canvas.height = 560;
         this.canvas.id = 'canvas';
+        this.canvas.tabIndex = 1;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[2]);
         this.frameNo = 0;
@@ -148,7 +149,7 @@ function component(width, height, color, x, y, type) {
         var diffX = Math.abs(this.x - otherobj.x);
         var diffY = Math.abs(this.y - otherobj.y);
         crash = false;
-        if (diffX < 30 && diffY < 30) {
+        if (diffX < 50 && diffY < 50) {
             crash = true;
         }
         return crash;
@@ -266,7 +267,7 @@ function updateArea() {
         can.style.transitionDuration = "6s";
         can.style.transform = "scale(3,3)";
         char.x = 480;
-        char.y = 260;
+        char.y = 280;
         char.angleInc = 5;
         done = true;
     }
@@ -323,7 +324,7 @@ function success() {
     setTimeout(on,2000);
     setTimeout(on,2500);
     setTimeout(off,3000);
-    setTimeout(nextlevel, 3000);
+    setTimeout(nextlevel, 10000);
 }
 
 function reset() {

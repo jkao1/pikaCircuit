@@ -51,6 +51,7 @@ var area = { // setting up canvas and its properties
         this.canvas.width = 960;
         this.canvas.height = 560;
         this.canvas.id = 'canvas';
+        this.canvas.tabIndex = 1;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[2]);
         this.frameNo = 0;
