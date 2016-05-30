@@ -26,17 +26,15 @@ function start() { // initiates game
     
     pl_wire01 = new component(148, 10, "#abb482", 150, 300);
     pl_wire02 = new component(10, 240, "#abb482", 270, 369); 
-    pl_wire03 = new component(180, 10, "#abb482", 457, 284); 
-    pl_wire04 = new component(10, 300, "#abb482", 677, 194); 
-    pl_retr05 = new component(10, 80, "#bec991", 420, 369);
-    pl_capa06 = new component(10, 80, "#bec991", 497, 194);
+    pl_wire03 = new component(180, 10, "#abb482", 387, 280); 
+    pl_wire04 = new component(10, 400, "#abb482", 590, 194); 
+    pl_capa06 = new component(80, 20, "#bec991", 390, 334);
     
     wire01 = new component(148, 10, "#d7912f", 450, 480); 
     wire02 = new component(10, 240, "#d7912f", 700, 370); 
     wire03 = new component(180, 10, "#d7912f", 517, 460); 
-    wire04 = new component(10, 300, "#d7912f", 700, 300); 
-    retr05 = new component(20, 80, "retr05", 300, 400, "img");
-    capa06 = new component(80, 80, "capa06", 300, 500, "img");
+    wire04 = new component(10, 400, "#d7912f", 700, 300); 
+    capa06 = new component(80, 20, "capa06", 300, 500, "img");
     
     lemd07 = new component(80, 80, "yellow", 800, 180, "circle");
     batt08 = new component(115, 80, "batt07", 150, 180, "img");
@@ -244,24 +242,23 @@ function elem_update(objA) {
 
 function updateArea() {
     area.clear();
-    eval(elem_crash(['wire01','wire02','wire03','wire04','retr05','capa06'],'horz'));    
+    eval(elem_crash(['wire01','wire02','wire03','wire04','capa06'],'horz'));    
     eval(elem_update(
         ['sett01','sett02','sett03',
-         'pl_wire01','pl_wire02','pl_wire03','pl_wire04','pl_retr05','pl_capa06',
+         'pl_wire01','pl_wire02','pl_wire03','pl_wire04','pl_capa06',
          'wire01','wire02','wire03','wire04',
-         'retr05','capa06', 'lemd07','batt08']
+         'capa06', 'lemd07','batt08']
          )
       );
     
     a = batt08.crash_horz(wire01);
     b = wire01.crash_horz(wire02);
-    c = wire02.crash_horz(retr05); 
-    d = retr05.crash_horz(wire03);
-    e = wire03.crash_horz(capa06);
-    f = capa06.crash_horz(wire04);
+    c = wire02.crash_horz(capa06); 
+    d = capa06.crash_horz(wire03);
+    e = wire03.crash_horz(wire04);
     g = wire04.crash_horz(lemd07);
     
-    if ( a&&b&&c&&d&&e&&f&&g&&!done ) {
+    if ( a&&b&&c&&d&&e&&g&&!done ) {
         success();
         can = document.getElementById('canvas');
         can.style.transitionDuration = "6s";
@@ -291,10 +288,6 @@ function updateArea() {
         wire04.snap(pl_wire04);
         Main.wire04.snap = true;
     }
-    if (retr05.crash_snap(pl_retr05)) {
-        retr05.snap(pl_retr05);
-        Main.retr05.snap = true;
-    }
     if (capa06.crash_snap(pl_capa06)) {
         capa06.snap(pl_capa06);
         Main.capa06.snap = true;
@@ -317,13 +310,15 @@ function success() {
     function off() {
         Main.lemd07.color = "#cca300";
     }
-    on();
+        setTimeout(on,200);
     setTimeout(off,500);
+    setTimeout(on,600);
+    setTimeout(off,700);
+    setTimeout(on,800);
+    setTimeout(on,850);
+    setTimeout(off,900);
     setTimeout(on,1000);
-    setTimeout(off,1500);
-    setTimeout(on,2000);
-    setTimeout(on,2500);
-    setTimeout(off,3000);
+    setTimeout(off,1100);
     setTimeout(nextlevel, 7000);
 }
 
@@ -332,5 +327,5 @@ function reset() {
 }
 
 function nextlevel() {
-     window.location.href = "sh03.html";
+     window.location.href = "win.html";
 }
