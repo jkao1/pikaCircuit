@@ -1,13 +1,9 @@
-# stuyhacks-2k16
+# pikaCircuit
 
-###To-Do
-- make better designs for characters
-- website could have a mini-tutorial with a small drag and drop for each basic
+###Overview
+Our project aims to teach children the basics of circuitry. It focuses on a Javascript canvas RPG game that allows the user to interact with a circuit board and view the effects of different components (resistors, capacitors, fuses, etc.)
 
-###Random Inspirations
-
-###Copy
-Resistor Tutorial:
-A resistor implements electrical resistance as a circuit element. They may be used to reduce current flow, and may act to lower voltage levels within circuits.
-Copper Wires:
-Copper wires are laminated onto a circuit board, making them "printed". These are a lot more easy to organize and use than regular wires.
+###Snapshots
+<img src="https://github.com/jkao1/pikaCircuit/blob/master/img/snapshots/snapshot01.png">
+<img src="https://github.com/jkao1/pikaCircuit/blob/master/img/snapshots/snapshot02.png">
+<img src="https://github.com/jkao1/pikaCircuit/blob/master/img/snapshots/snapshot03.png">
